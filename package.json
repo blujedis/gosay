@@ -1,0 +1,80 @@
+{
+  "name": "gosay",
+  "version": "1.0.0",
+  "description": "Like Cowsay but customizable and with themes!",
+  "main": "dist/index.js",
+  "bin": "./bin/cli",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "clean": "node ./build clean",
+    "copy": "node ./build copy",
+    "compile": "node ./build compile",
+    "bump": "node ./build bump",
+    "build": "node ./build build",
+    "commit": "node ./build commit",
+    "docs": "node ./build docs",
+    "release": "node ./build release",
+    "test": "node ./build test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/origin1tech/gosay.git"
+  },
+  "build": {
+    "clean": [
+      "./dist"
+    ],
+    "copy": {}
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.ts",
+      "src/**/*.tsx"
+    ],
+    "exclude": [
+      "src/**/*.spec.ts"
+    ],
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "require": [
+      "./build/spec"
+    ],
+    "reporter": [
+      "text",
+      "html"
+    ],
+    "sourceMap": true,
+    "instrument": true
+  },
+  "keywords": [],
+  "author": "Origin1 Technologies <origin1tech@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/origin1tech/gosay/issues"
+  },
+  "homepage": "https://github.com/origin1tech/gosay#readme",
+  "devDependencies": {
+    "@types/chai": "^4.0.1",
+    "@types/js-yaml": "^3.10.1",
+    "@types/mocha": "^2.2.41",
+    "@types/node": "^8.0.28",
+    "chai": "^4.0.2",
+    "mocha": "^3.4.2",
+    "nyc": "^11.2.1",
+    "passpipe": "^1.0.1",
+    "stiks": "^1.0.6",
+    "ts-node": "^3.3.0",
+    "tslint": "^5.5.0",
+    "typedoc": "^0.7.1",
+    "typescript": "^2.5.2"
+  },
+  "dependencies": {
+    "chek": "^1.0.30",
+    "colurs": "^1.0.17",
+    "js-yaml": "^3.10.0",
+    "stiks": "^1.1.4",
+    "text-table": "^0.2.0"
+  }
+}
