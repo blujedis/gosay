@@ -1,6 +1,6 @@
 {
   "name": "gosay",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Like Cowsay but customizable and with themes!",
   "main": "dist/index.js",
   "bin": "./bin/cli",
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/origin1tech/gosay.git"
+    "url": "git+https://github.com/blujedis/gosay.git"
   },
   "build": {
     "clean": [
@@ -49,12 +49,12 @@
     "instrument": true
   },
   "keywords": [],
-  "author": "Origin1 Technologies <origin1tech@gmail.com>",
+  "author": "Blujedi <blujedicorp@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/origin1tech/gosay/issues"
+    "url": "https://github.com/blujedis/gosay/issues"
   },
-  "homepage": "https://github.com/origin1tech/gosay#readme",
+  "homepage": "https://github.com/blujedis/gosay#readme",
   "devDependencies": {
     "@types/chai": "^4.0.1",
     "@types/js-yaml": "^3.10.1",

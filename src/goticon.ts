@@ -13,12 +13,15 @@ const ANSI_PATTERN = [
   '[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:[a-zA-Z\\d]*(?:;[a-zA-Z\\d]*)*)?\\u0007)',
   '(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PRZcf-ntqry=><~]))'
 ].join('|');
+
 const ANSI_EXP = new RegExp(ANSI_PATTERN, 'g');
+
 const LOG_TYPES = {
   error: 'red',
   warn: 'yellow',
   notice: 'green'
 };
+
 const YAML_TEMPLATE =
   '---' + EOL + EOL +
   '# YAML CONFIGURATION: This section contains element and theme ' + EOL +

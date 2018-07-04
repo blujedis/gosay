@@ -150,8 +150,6 @@ export class Gosay {
     const layout = BOXES[options.border];
     const spacing = this.equalParts(max - len);
 
-    // console.log(spacing);
-
     const padding = ' '.repeat(options.padding);
     const prefix = ' '.repeat(spacing.start);
     const suffix = ' '.repeat(spacing.end);
@@ -219,8 +217,7 @@ export class Gosay {
    * @param path the path of the file to be read.
    */
   read(path: string) {
-    path = resolve(path);
-    return readFileSync(path, 'utf8');
+    return readFileSync(resolve(path), 'utf8');
   }
 
   /**
