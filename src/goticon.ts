@@ -1,11 +1,11 @@
-import { isString, isPlainObject, toArray, keys, extend, contains, last, first, isBoolean, isArray, isNumber, isValue, isWindows, get, set, isEmpty, orderBy, flatten, isObject, clone } from 'chek';
+import { isString, isPlainObject, toArray, keys, isBoolean, isArray, isValue, isWindows, isEmpty, orderBy, flatten, clone, last } from 'chek';
 import * as table from 'text-table';
 import { Colurs, IColurs } from 'colurs';
-import { existsSync, readFileSync, writeFileSync, readdirSync, statSync, mkdirSync } from 'fs';
-import { extname, resolve, join, basename, parse, dirname } from 'path';
+import { existsSync, writeFileSync, mkdirSync } from 'fs';
+import { extname, resolve, join, parse, dirname } from 'path';
 import { EOL } from 'os';
-import { format, inspect } from 'util';
-import { IMap, AnsiStyles, IElement, IIndexResult, ITheme, IOptions, IRange, IThemeElement, Points, IPoint, RestParam } from './interfaces';
+import { inspect } from 'util';
+import { IMap, AnsiStyles, IElement, ITheme, IRange, IThemeElement, Points, IPoint, RestParam } from './interfaces';
 import * as yaml from './yaml';
 import * as utils from './utils';
 

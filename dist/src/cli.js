@@ -8,7 +8,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var chek_1 = require("chek");
 var _1 = require("./");
-var pkg = require('../package.json');
+var pkg = require('../../package.json');
 var argv = process.argv.slice(2);
 var input = parseInput(argv);
 var gosay = new _1.Gosay({
@@ -25,10 +25,10 @@ function parseInput(args) {
         var isFlagPrev = /^--?/.test(args[i - 1]);
         var valFlags = ['--theme'];
         var key = v.replace(/^--(no-)?/, '');
-        if (isFlag) {
+        if (isFlag) { // is an arg flag lik --help
             if (!chek_1.contains(valFlags, v))
                 obj[key] = /--no-/.test(v) ? false : true;
-            else
+            else // is a flag that requires a value.
                 obj[key] = args[i + 1];
         }
         return !isFlag && !isFlagPrev;
@@ -169,7 +169,7 @@ function load() {
 }
 function say() {
     if (!input.text)
-        return help();
+        return;
     var gus = load();
     var rendered = gus.render(input.theme);
     gosay.say(input.text, rendered);

@@ -11,14 +11,14 @@ export declare class Gosay {
      * @param value the value to be divided.
      * @param divisor the value to divide by.
      */
-    private equalParts(value, divisor?);
+    private equalParts;
     /**
       * Parse Goticon
       * : Parses the ansi artwork counting lines, finding longest line.
       *
       * @param goticon the ansi artwork to parse.
       */
-    private parseGoticon(goticon);
+    private parseGoticon;
     /**
      * Compile
      * : Compiles the row spacing and padding.
@@ -27,14 +27,14 @@ export declare class Gosay {
      * @param len the length of the row.
      * @param max the max length allowable for the row.
      */
-    private normalizeRow(row, len, max);
+    private normalizeRow;
     /**
      * Wrap
      * : Wraps text building rows for use withing text box.
      *
      * @param msg the message to wrap text for.
      */
-    private wrap(msg);
+    private wrap;
     /**
      * Read
      * : Simply reads a file, useful for looking up pre-compiled Goticon images.

@@ -133,7 +133,6 @@ var Gosay = /** @class */ (function () {
         var options = this.options;
         var layout = BOXES[options.border];
         var spacing = this.equalParts(max - len);
-        // console.log(spacing);
         var padding = ' '.repeat(options.padding);
         var prefix = ' '.repeat(spacing.start);
         var suffix = ' '.repeat(spacing.end);
@@ -169,7 +168,7 @@ var Gosay = /** @class */ (function () {
                 rows.push(this.normalizeRow(row, rLen, maxLen));
                 row = match;
                 rowStripped = mStrip;
-                if (!matches.length)
+                if (!matches.length) // last element.
                     rows.push(this.normalizeRow(row, mLen, maxLen));
             }
             else {
@@ -189,8 +188,7 @@ var Gosay = /** @class */ (function () {
      * @param path the path of the file to be read.
      */
     Gosay.prototype.read = function (path) {
-        path = path_1.resolve(path);
-        return fs_1.readFileSync(path, 'utf8');
+        return fs_1.readFileSync(path_1.resolve(path), 'utf8');
     };
     /**
      * Goticon

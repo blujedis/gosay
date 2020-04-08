@@ -5,10 +5,10 @@
  * put you in the right direction.
  */
 
-import { capitalize, isFile, contains, keys } from 'chek';
-import { Gosay, IElement, Goticon } from './';
+import { capitalize,  contains } from 'chek';
+import { Gosay } from './';
 
-const pkg = require('../package.json');
+const pkg = require('../../package.json');
 const argv = process.argv.slice(2);
 const input = parseInput(argv);
 
@@ -209,7 +209,7 @@ function load() {
 function say() {
 
   if (!input.text)
-    return help();
+    return;
 
   const gus = load();
   const rendered = gus.render(input.theme);

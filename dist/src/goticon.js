@@ -687,6 +687,7 @@ var Goticon = /** @class */ (function () {
                     }
                     usedRanges.push(range);
                 }
+                // For hidden elemnts just replace range with spaces update line.
                 else {
                     styled = ' '.repeat((range.end - range.start) + 1);
                     lines[range.row] = head + styled + tail;

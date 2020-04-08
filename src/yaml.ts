@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 import { readFileSync, existsSync } from 'fs';
 import * as parser from 'js-yaml';
-import { isArray, extend } from 'chek';
+import { extend } from 'chek';
 
 const BOM = '\\ufeff?';
 const SPLIT_EXP = /(\r?\n)/;

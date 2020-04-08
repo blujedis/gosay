@@ -15,7 +15,7 @@ export declare class Goticon {
      * @param x the x point(s) or array of PointSets.
      * @param y the y point(s).
      */
-    private toPointSets(x?, y?);
+    private toPointSets;
     /**
      * Unique Points
      * : Ensures points are unique.
@@ -23,12 +23,12 @@ export declare class Goticon {
      * @param element the element to compare points against.
      * @param points points to compare returning unique points.
      */
-    private uniquePoints(element, points);
+    private uniquePoints;
     /**
      * To YAML
      * : Converts Goticon to YAML.
      */
-    private toYAML();
+    private toYAML;
     /**
      * Map To Array
      * : Parses a string converting to element array using ranges.
@@ -38,7 +38,7 @@ export declare class Goticon {
      * @param ranges the ranges used to parse value with.
      * @param val the string value to parse.
      */
-    private mapToArray(name, val);
+    private mapToArray;
     /**
      * Fill Range
      * : Fills a range of numbers.
@@ -46,7 +46,7 @@ export declare class Goticon {
      * @param start the starting value.
      * @param end the ending value.
      */
-    private fillRange(start, end);
+    private fillRange;
     /**
      * Has Elements
      * : Checks if Goticon has any elements.

@@ -1,10 +1,10 @@
 import { EOL } from 'os';
-import { readFileSync, readdirSync, statSync, existsSync } from 'fs';
-import { join, resolve, extname, basename } from 'path';
+import { readFileSync, } from 'fs';
+import { join, resolve } from 'path';
 import { Colurs, IColurs } from 'colurs';
-import { extend, isString, isRegExp, isNumber, split, contains, toArray, isPlainObject, keys, isArray, isObject, isEmpty } from 'chek';
+import { extend, isString, toArray, isObject, isEmpty } from 'chek';
 import { Goticon } from './goticon';
-import { IMap, IBox, IOptions } from './interfaces';
+import { IOptions } from './interfaces';
 
 // WARNING: this suits the need here
 // but not remotely complete.
