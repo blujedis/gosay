@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var chek_1 = require("chek");
+const chek_1 = require("chek");
 exports.ANSI_PATTERN = [
     '[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:[a-zA-Z\\d]*(?:;[a-zA-Z\\d]*)*)?\\u0007)',
     '(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PRZcf-ntqry=><~]))'
@@ -11,8 +11,8 @@ exports.ANSI_EXP = new RegExp(exports.ANSI_PATTERN, 'g');
  * : Iterates content and normalizes the length of each row.
  */
 function normalize(content) {
-    var _stats = stats(content);
-    var rows = _stats.lines.map(function (s) {
+    const _stats = stats(content);
+    const rows = _stats.lines.map((s) => {
         if (s.length < _stats.columns)
             s += ' '.repeat(_stats.columns - s.length);
         return s;
@@ -38,12 +38,12 @@ exports.hasAnsi = hasAnsi;
   * @param replace when NOT false matched values are replaced.
   */
 function indexAnsi(val, replace) {
-    var source = val;
-    var indexes = {};
-    val = val.replace(exports.ANSI_EXP, function (match, offset) {
+    const source = val;
+    const indexes = {};
+    val = val.replace(exports.ANSI_EXP, (match, offset) => {
         if (!match)
             return;
-        chek_1.keys(indexes).forEach(function (key, i) {
+        chek_1.keys(indexes).forEach((key, i) => {
             offset -= indexes[key].length;
         });
         indexes[offset] = indexes[offset] ? indexes[offset] + match : match;
@@ -52,9 +52,9 @@ function indexAnsi(val, replace) {
         return match;
     });
     return {
-        source: source,
+        source,
         modified: val,
-        indexes: indexes
+        indexes
     };
 }
 exports.indexAnsi = indexAnsi;
@@ -69,14 +69,14 @@ exports.indexAnsi = indexAnsi;
  */
 function revertAnsi(val, indexes) {
     if (chek_1.isPlainObject(val)) {
-        var obj = val;
+        const obj = val;
         val = obj.modified;
         indexes = obj.indexes;
     }
-    val = (val + ' ').replace(/./g, function (char, idx) {
-        chek_1.keys(indexes).forEach(function (offset) {
-            var continues = 0;
-            var contiuesStyle;
+    val = (val + ' ').replace(/./g, (char, idx) => {
+        chek_1.keys(indexes).forEach((offset) => {
+            let continues = 0;
+            let contiuesStyle;
             if (idx > offset) {
                 continues++;
                 contiuesStyle = indexes[offset];
@@ -111,8 +111,8 @@ exports.toLines = toLines;
  * @param content optional content or stored value is used.
  */
 function stats(content) {
-    var lines = toLines(content);
-    var columns = lines.reduce(function (a, b) { return a.length > b.length ? a : b; });
+    const lines = toLines(content);
+    const columns = lines.reduce(function (a, b) { return a.length > b.length ? a : b; });
     return {
         columns: columns.length,
         rows: lines.length,

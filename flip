@@ -1,0 +1,24 @@
+---
+
+# YAML CONFIGURATION: This section contains element and theme 
+# settings for rendering this Goticon. If you DO NOT wish to 
+# store configuration settings use .save(false).
+
+name: flip
+elements: {}
+themes:
+  default:
+    name: default
+    elements: {}
+
+---
+     /     \      
+     _(I)(I)_     
+    ( _ .. _ )    
+     `.`--'.'     
+      )    (      
+  ,-./      \,-.  
+ ( _( ||  || )_ ) 
+__\ \\||--||'/ /__
+`-._//||\/||\\_.-'
+     `--'`--'     

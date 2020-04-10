@@ -5,7 +5,7 @@
  * put you in the right direction.
  */
 
-import { capitalize,  contains } from 'chek';
+import { capitalize, contains } from 'chek';
 import { Gosay } from './';
 
 const pkg = require('../../package.json');
@@ -28,7 +28,7 @@ function parseInput(args: string[]) {
     const isFlag = /^--?/.test(v);
     const isFlagPrev = /^--?/.test(args[i - 1]);
     const valFlags = ['--theme'];
-    const key = v.replace(/^--(no-)?/, '');
+    const key = v.replace(/^--(no-)?/, '').replace(/^-/, '');
     if (isFlag) { // is an arg flag lik --help
       if (!contains(valFlags, v))
         obj[key] = /--no-/.test(v) ? false : true;
@@ -99,6 +99,7 @@ function plot() {
 function load() {
 
   const gus = gosay.goticon('gus');
+  const flip = gosay.goticon('flip');
 
   // We reset here to clear
   // previous configuration.
@@ -217,9 +218,9 @@ function say() {
 
 }
 
-if (input.help)
+if (input.help || input.h)
   help();
-if (input.plot)
+if (input.plot || input.p)
   plot();
 else
   say();

@@ -1,18 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var os_1 = require("os");
-var fs_1 = require("fs");
-var path_1 = require("path");
-var colurs_1 = require("colurs");
-var chek_1 = require("chek");
-var goticon_1 = require("./goticon");
+const os_1 = require("os");
+const fs_1 = require("fs");
+const path_1 = require("path");
+const colurs_1 = require("colurs");
+const chek_1 = require("chek");
+const goticon_1 = require("./goticon");
 // WARNING: this suits the need here
 // but not remotely complete.
-var PATH_LIKE = /^\.?(\\|\/)?.*\.[a-z]+$/;
+const PATH_LIKE = /^\.?(\\|\/)?.*\.[a-z]+$/;
 /**
  * @see https://github.com/sindresorhus/cli-boxes/blob/master/boxes.json
  */
-var BOXES = {
+const BOXES = {
     single: {
         topLeft: '┌',
         topRight: '┐',
@@ -62,7 +62,7 @@ var BOXES = {
         horizontal: '-'
     }
 };
-var DEFAULTS = {
+const DEFAULTS = {
     goticon: undefined,
     directory: './goticons',
     width: 36,
@@ -76,8 +76,8 @@ var DEFAULTS = {
     wrapper: os_1.EOL,
     colorize: true // enables/disables colorization.
 };
-var Gosay = /** @class */ (function () {
-    function Gosay(options) {
+class Gosay {
+    constructor(options) {
         options = options || {};
         this.options = chek_1.extend({}, DEFAULTS, options);
         this._colurs = new colurs_1.Colurs({ enabled: this.options.colorize });
@@ -89,38 +89,37 @@ var Gosay = /** @class */ (function () {
      * @param value the value to be divided.
      * @param divisor the value to divide by.
      */
-    Gosay.prototype.equalParts = function (value, divisor) {
+    equalParts(value, divisor) {
         divisor = divisor || 2;
-        var start = ~~(value / divisor);
-        var remainder = value % divisor;
-        var end = start + remainder;
+        const start = ~~(value / divisor);
+        const remainder = value % divisor;
+        const end = start + remainder;
         return {
-            start: start,
-            end: end,
-            remainder: remainder
+            start,
+            end,
+            remainder
         };
-    };
+    }
     /**
       * Parse Goticon
       * : Parses the ansi artwork counting lines, finding longest line.
       *
       * @param goticon the ansi artwork to parse.
       */
-    Gosay.prototype.parseGoticon = function (goticon) {
-        var _this = this;
-        var rows = goticon.split(/\r?\n/);
-        var longest = rows.reduce(function (a, b) {
-            a = _this._colurs.strip(a);
-            b = _this._colurs.strip(b);
+    parseGoticon(goticon) {
+        const rows = goticon.split(/\r?\n/);
+        const longest = rows.reduce((a, b) => {
+            a = this._colurs.strip(a);
+            b = this._colurs.strip(b);
             return a.length > b.length ? a : b;
         });
-        var width = longest.length;
+        const width = longest.length;
         return {
-            goticon: goticon,
-            rows: rows,
-            width: width
+            goticon,
+            rows,
+            width
         };
-    };
+    }
     /**
      * Compile
      * : Compiles the row spacing and padding.
@@ -129,41 +128,41 @@ var Gosay = /** @class */ (function () {
      * @param len the length of the row.
      * @param max the max length allowable for the row.
      */
-    Gosay.prototype.normalizeRow = function (row, len, max) {
-        var options = this.options;
-        var layout = BOXES[options.border];
-        var spacing = this.equalParts(max - len);
-        var padding = ' '.repeat(options.padding);
-        var prefix = ' '.repeat(spacing.start);
-        var suffix = ' '.repeat(spacing.end);
-        var vertical = layout.vertical;
+    normalizeRow(row, len, max) {
+        const options = this.options;
+        const layout = BOXES[options.border];
+        const spacing = this.equalParts(max - len);
+        const padding = ' '.repeat(options.padding);
+        const prefix = ' '.repeat(spacing.start);
+        const suffix = ' '.repeat(spacing.end);
+        let vertical = layout.vertical;
         if (options.borderStyle)
             vertical = this._colurs.applyAnsi(vertical, options.borderStyle);
         if (options.align !== 'center')
             return vertical + padding + row + prefix + suffix + padding + vertical;
         else
             return vertical + padding + prefix + row + suffix + padding + vertical;
-    };
+    }
     /**
      * Wrap
      * : Wraps text building rows for use withing text box.
      *
      * @param msg the message to wrap text for.
      */
-    Gosay.prototype.wrap = function (msg) {
-        var options = this.options;
-        var matches = msg.split(' ');
-        var maxLen = options.width - (options.padding * 2) - 2;
-        var rows = [];
-        var row = '';
-        var rowStripped = '';
+    wrap(msg) {
+        const options = this.options;
+        let matches = msg.split(' ');
+        const maxLen = options.width - (options.padding * 2) - 2;
+        const rows = [];
+        let row = '';
+        let rowStripped = '';
         if (matches === null)
             matches = [msg];
         while (matches.length) {
-            var match = matches.shift() + ' ';
-            var mStrip = this._colurs.strip(match);
-            var mLen = mStrip.length;
-            var rLen = rowStripped.length;
+            let match = matches.shift() + ' ';
+            let mStrip = this._colurs.strip(match);
+            let mLen = mStrip.length;
+            let rLen = rowStripped.length;
             if ((rLen + mLen) > maxLen) {
                 rows.push(this.normalizeRow(row, rLen, maxLen));
                 row = match;
@@ -180,16 +179,16 @@ var Gosay = /** @class */ (function () {
             }
         }
         return rows;
-    };
+    }
     /**
      * Read
      * : Simply reads a file, useful for looking up pre-compiled Goticon images.
      *
      * @param path the path of the file to be read.
      */
-    Gosay.prototype.read = function (path) {
+    read(path) {
         return fs_1.readFileSync(path_1.resolve(path), 'utf8');
-    };
+    }
     /**
      * Goticon
      * : Creates a new Goticon.
@@ -198,11 +197,11 @@ var Gosay = /** @class */ (function () {
      * @param path the path to the goticon.
      * @param content static or default content for the Goticon.
      */
-    Gosay.prototype.goticon = function (name, content, path) {
-        var defaultPath = path_1.join(this.options.directory, name + '.goticon');
+    goticon(name, content, path) {
+        const defaultPath = path_1.join(this.options.directory, name + '.goticon');
         path = path_1.resolve(path || defaultPath);
         return new goticon_1.Goticon(name, path, content);
-    };
+    }
     /**
      * Set Option
      * : Sets an options.
@@ -210,9 +209,9 @@ var Gosay = /** @class */ (function () {
      * @param key the option key.
      * @param val the value for the key.
      */
-    Gosay.prototype.setOption = function (key, val) {
+    setOption(key, val) {
         this.options[key] = val;
-    };
+    }
     /**
      * Boxify
      * : Boxify a message.
@@ -223,15 +222,15 @@ var Gosay = /** @class */ (function () {
      * @param padding the number of spaces to pad the message box.
      * @param align the text alignment within the box.
      */
-    Gosay.prototype.boxify = function (msg) {
-        var options = this.options;
-        var layout = BOXES[options.border];
-        var boxTop = layout.topLeft +
+    boxify(msg) {
+        const options = this.options;
+        const layout = BOXES[options.border];
+        let boxTop = layout.topLeft +
             layout.horizontal.repeat(options.width - 2) +
             layout.topRight;
-        var boxRows = this.wrap(msg);
-        var boxInner = boxRows.join('\n');
-        var boxBottom = layout.bottomLeft +
+        const boxRows = this.wrap(msg);
+        const boxInner = boxRows.join('\n');
+        let boxBottom = layout.bottomLeft +
             layout.horizontal.repeat(options.width - 2) +
             layout.bottomRight;
         if (options.borderStyle) {
@@ -247,15 +246,14 @@ var Gosay = /** @class */ (function () {
             rows: boxRows,
             result: boxRows.join('\n')
         };
-    };
-    Gosay.prototype.configure = function (msg, goticon, options) {
-        var _this = this;
+    }
+    configure(msg, goticon, options) {
         options = chek_1.extend({}, this.options, options);
         if (!msg)
             return '\nWhoops nothing to say...\n';
-        var append, prepend;
+        let append, prepend;
         goticon = goticon || options.goticon || '';
-        var wrapper = chek_1.toArray(options.wrapper);
+        const wrapper = chek_1.toArray(options.wrapper);
         prepend = wrapper[0] || '';
         append = wrapper[1] || wrapper[0] || '';
         if (chek_1.isString(goticon) && PATH_LIKE.test(goticon))
@@ -268,27 +266,27 @@ var Gosay = /** @class */ (function () {
             this.options.goticon = goticon;
         if (!goticon.length)
             options.gutter = 0;
-        var boxified = this.boxify(msg);
-        var parsedGoticon = this.parseGoticon(goticon);
-        var goticonRows = parsedGoticon.rows;
-        var boxRows = boxified.rows;
-        var goticonRowsLen = parsedGoticon.rows.length;
-        var boxRowsLen = boxified.rows.length;
-        var adjustBox = goticonRowsLen > boxRowsLen;
-        var boxRowsOffset = Math.max(0, goticonRowsLen - boxRowsLen);
-        var goticonRowsOffset = Math.max(0, boxRowsLen - goticonRowsLen);
-        var goticonRowsAdjust = this.equalParts(goticonRowsOffset);
-        var boxRowsAdjust = this.equalParts(boxRowsOffset);
-        var adjustedRows = adjustBox ? boxRows : goticonRows;
-        var adjuster = adjustBox ? boxRowsAdjust : goticonRowsAdjust;
-        var adjusterWidth = adjustBox ? options.width : parsedGoticon.width;
-        var posX = options.positionX;
-        var posY = options.positionY;
-        var goticonMaxWidth = parsedGoticon.width;
+        const boxified = this.boxify(msg);
+        const parsedGoticon = this.parseGoticon(goticon);
+        let goticonRows = parsedGoticon.rows;
+        let boxRows = boxified.rows;
+        const goticonRowsLen = parsedGoticon.rows.length;
+        const boxRowsLen = boxified.rows.length;
+        const adjustBox = goticonRowsLen > boxRowsLen;
+        const boxRowsOffset = Math.max(0, goticonRowsLen - boxRowsLen);
+        const goticonRowsOffset = Math.max(0, boxRowsLen - goticonRowsLen);
+        const goticonRowsAdjust = this.equalParts(goticonRowsOffset);
+        const boxRowsAdjust = this.equalParts(boxRowsOffset);
+        let adjustedRows = adjustBox ? boxRows : goticonRows;
+        const adjuster = adjustBox ? boxRowsAdjust : goticonRowsAdjust;
+        const adjusterWidth = adjustBox ? options.width : parsedGoticon.width;
+        const posX = options.positionX;
+        const posY = options.positionY;
+        const goticonMaxWidth = parsedGoticon.width;
         // Compile the adjuster rows.
-        var adjusterRow = ' '.repeat(adjusterWidth);
-        var ct = adjuster.start + adjuster.end;
-        var padRows = [];
+        const adjusterRow = ' '.repeat(adjusterWidth);
+        let ct = adjuster.start + adjuster.end;
+        const padRows = [];
         while (ct--)
             padRows.push(adjusterRow);
         if (posY === 'top') {
@@ -307,13 +305,13 @@ var Gosay = /** @class */ (function () {
             boxRows = adjustedRows;
         else
             goticonRows = adjustedRows;
-        var table = [];
-        var gutter = ' '.repeat(options.gutter || 0);
-        goticonRows.forEach(function (r, i) {
-            var row;
-            var boxRow = boxRows.shift() || '';
-            var logoRowLen = r && _this._colurs.strip(r).length;
-            var boxRowLen = boxRow && _this._colurs.strip(boxRow).length;
+        let table = [];
+        const gutter = ' '.repeat(options.gutter || 0);
+        goticonRows.forEach((r, i) => {
+            let row;
+            const boxRow = boxRows.shift() || '';
+            const logoRowLen = r && this._colurs.strip(r).length;
+            const boxRowLen = boxRow && this._colurs.strip(boxRow).length;
             // Ensure goticon rows are all same width.
             r += ' '.repeat(Math.max(0, parsedGoticon.width - logoRowLen));
             if (posX === 'right')
@@ -323,14 +321,13 @@ var Gosay = /** @class */ (function () {
             table.push(row);
         });
         return prepend + table.join('\n') + append;
-    };
-    Gosay.prototype.say = function (msg, goticon, options) {
+    }
+    say(msg, goticon, options) {
         msg = this.configure(msg, goticon, options);
         console.log(msg);
         return this;
-    };
-    return Gosay;
-}());
+    }
+}
 exports.Gosay = Gosay;
 /**
  *  Get

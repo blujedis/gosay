@@ -942,7 +942,7 @@ export class Goticon {
    * @param path the path to output the current content to.
    * @param content optional content instead of using internal this.content
    */
-  save(path: string | boolean, content?: string): Goticon;
+  save(path: string, content?: string): Goticon;
 
   /**
    * Save
@@ -952,7 +952,7 @@ export class Goticon {
    * @param config whether to include config as front matter.
    * @param content optional content instead of using internal this.content
    */
-  save(path?: string | boolean, config?: boolean | string, content?: string): Goticon;
+  save(path?: string, config?: boolean, content?: string): Goticon;
   save(path?: string | boolean, config?: boolean | string, content?: string): Goticon {
 
     if (isString(config)) {

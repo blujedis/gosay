@@ -210,7 +210,7 @@ export declare class Goticon {
      * @param path the path to output the current content to.
      * @param content optional content instead of using internal this.content
      */
-    save(path: string | boolean, content?: string): Goticon;
+    save(path: string, content?: string): Goticon;
     /**
      * Save
      * : Persists Goticon to file sysem.

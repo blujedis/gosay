@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var path_1 = require("path");
-var fs_1 = require("fs");
-var parser = require("js-yaml");
-var chek_1 = require("chek");
-var BOM = '\\ufeff?';
-var SPLIT_EXP = /(\r?\n)/;
-var YAML_EXP_STR = '^(' +
+const path_1 = require("path");
+const fs_1 = require("fs");
+const parser = require("js-yaml");
+const chek_1 = require("chek");
+const BOM = '\\ufeff?';
+const SPLIT_EXP = /(\r?\n)/;
+const YAML_EXP_STR = '^(' +
     BOM +
     '(= yaml =|---)' +
     '$([\\s\\S]*?)' +
@@ -14,10 +14,10 @@ var YAML_EXP_STR = '^(' +
     '$' +
     (process.platform === 'win32' ? '\\r?' : '') +
     '(?:\\n)?)';
-var YAML_EXP = new RegExp(YAML_EXP_STR, 'm');
-var TRIM_EXP = /^\s+|\s+$/g;
-var LOAD_OPTIONS = {};
-var DUMP_OPTIONS = {
+const YAML_EXP = new RegExp(YAML_EXP_STR, 'm');
+const TRIM_EXP = /^\s+|\s+$/g;
+const LOAD_OPTIONS = {};
+const DUMP_OPTIONS = {
     skipInvalid: true
 };
 /**
@@ -39,19 +39,19 @@ exports.yamlify = yamlify;
  */
 function parse(val, options) {
     val = val || '';
-    var hasYaml = /^= yaml =|---/.test(val);
+    const hasYaml = /^= yaml =|---/.test(val);
     if (!hasYaml)
         return { data: {}, body: val, yaml: null };
-    var matches = YAML_EXP.exec(val);
+    const matches = YAML_EXP.exec(val);
     if (!matches)
         return {
             data: {},
             body: val,
             yaml: null
         };
-    var yaml = matches[matches.length - 1].replace(TRIM_EXP, '');
-    var body = val.replace(matches[0], '');
-    var data = parser.safeLoad(yaml, chek_1.extend(LOAD_OPTIONS, options));
+    const yaml = matches[matches.length - 1].replace(TRIM_EXP, '');
+    const body = val.replace(matches[0], '');
+    const data = parser.safeLoad(yaml, chek_1.extend(LOAD_OPTIONS, options));
     return {
         data: data,
         body: body,
@@ -73,7 +73,7 @@ function load(path, content) {
     if (!content && fs_1.existsSync(path))
         content = fs_1.readFileSync(path).toString();
     content = content || '';
-    var parsed = parse(content);
+    const parsed = parse(content);
     return {
         path: path,
         data: parsed.data,

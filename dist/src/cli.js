@@ -6,25 +6,25 @@
  * put you in the right direction.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var chek_1 = require("chek");
-var _1 = require("./");
-var pkg = require('../../package.json');
-var argv = process.argv.slice(2);
-var input = parseInput(argv);
-var gosay = new _1.Gosay({
+const chek_1 = require("chek");
+const _1 = require("./");
+const pkg = require('../../package.json');
+const argv = process.argv.slice(2);
+const input = parseInput(argv);
+const gosay = new _1.Gosay({
     width: 32,
     gutter: 1,
     positionY: 'top'
 });
 function parseInput(args) {
-    var obj = {
+    const obj = {
         yaml: true
     };
-    obj.text = args.filter(function (v, i) {
-        var isFlag = /^--?/.test(v);
-        var isFlagPrev = /^--?/.test(args[i - 1]);
-        var valFlags = ['--theme'];
-        var key = v.replace(/^--(no-)?/, '');
+    obj.text = args.filter((v, i) => {
+        const isFlag = /^--?/.test(v);
+        const isFlagPrev = /^--?/.test(args[i - 1]);
+        const valFlags = ['--theme'];
+        const key = v.replace(/^--(no-)?/, '').replace(/^-/, '');
         if (isFlag) { // is an arg flag lik --help
             if (!chek_1.contains(valFlags, v))
                 obj[key] = /--no-/.test(v) ? false : true;
@@ -37,18 +37,18 @@ function parseInput(args) {
 }
 function message(msg) {
     msg = msg || '';
-    var methods = {
-        add: function (str, newlines) {
+    const methods = {
+        add: (str, newlines) => {
             msg += str;
             newlines = typeof newlines === 'undefined' ? 1 : newlines;
             if (newlines)
                 msg += '\n'.repeat(newlines);
             return methods;
         },
-        done: function () {
+        done: () => {
             return msg;
         },
-        show: function () {
+        show: () => {
             console.log(msg);
         }
     };
@@ -67,27 +67,29 @@ function help() {
         .add('  $ gosay --plot --theme sleepy    | as above using theme sleepy.')
         .add('  $ gosay --help                   | show help.', 2)
         .add('Themes:')
-        .add("  sleepy   | shows Gus sleeping.")
-        .add("  scared   | shows Gus with scared eyes.")
-        .add("  alert    | shows default Gus with alert flag.")
-        .add("  wink     | shows default Gus but winking.", 2)
+        .add(`  sleepy   | shows Gus sleeping.`)
+        .add(`  scared   | shows Gus with scared eyes.`)
+        .add(`  alert    | shows default Gus with alert flag.`)
+        .add(`  wink     | shows default Gus but winking.`, 2)
         .add('Examples:')
-        .add("  $ gosay 'Hello Gus.'")
-        .add("  $ gosay 'Gus is sleepy.' --theme sleepy")
-        .add("  $ gosay --plot")
-        .add("  $ gosay --plot --theme sleepy")
+        .add(`  $ gosay 'Hello Gus.'`)
+        .add(`  $ gosay 'Gus is sleepy.' --theme sleepy`)
+        .add(`  $ gosay --plot`)
+        .add(`  $ gosay --plot --theme sleepy`)
         .show();
 }
 function plot() {
     if (input.plot === true)
         input.plot = undefined;
-    var gus = load();
+    const gus = load();
     console.log();
     console.log(gus.plot(input.theme));
     console.log();
 }
 function load() {
-    var gus = gosay.goticon('gus');
+    const gus = gosay.goticon('gus');
+    const flip = gosay.goticon('flip');
+    flip.save('flip');
     // We reset here to clear
     // previous configuration.
     gus.reset();
@@ -170,13 +172,13 @@ function load() {
 function say() {
     if (!input.text)
         return;
-    var gus = load();
-    var rendered = gus.render(input.theme);
+    const gus = load();
+    const rendered = gus.render(input.theme);
     gosay.say(input.text, rendered);
 }
-if (input.help)
+if (input.help || input.h)
     help();
-if (input.plot)
+if (input.plot || input.p)
     plot();
 else
     say();
